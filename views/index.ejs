@@ -16,8 +16,19 @@
 	<%- include("partials/header") %>
 
 	<section id="upload-section" class="flex-grow-1">
-		<!-- <p>JOE</p> -->
-	</section>
+		<div class="container d-flex justify-content-center align-items-center h-100">
+			<div class="card p-4">
+				<h3 class="card-title">Upload Your Syllabus</h3>
+				<form id="uploadForm" enctype="multipart/form-data" class="w-100">
+					<div class="form-group">
+						<input type="file" class="form-control-file" id="pdfFile" accept="application/pdf">
+					</div>
+					<button type="submit" class="btn btn-primary">Upload</button>
+				</form>
+				<p>PDFs only pls</p>
+			</div>
+		</div>
+	</section>	
 
 	<%- include("partials/footer") %>
 </body>
