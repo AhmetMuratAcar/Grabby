@@ -1,7 +1,11 @@
 import bodyParser from "body-parser";
+import 'dotenv/config'
 import express from "express";
+
 const app = express();
 const port = 3000;
+
+console.log(process.env.joe);
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
