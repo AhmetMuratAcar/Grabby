@@ -7,6 +7,8 @@ const port = 3000;
 
 console.log(process.env.joe);
 
+// Remember to set up multer here
+
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
