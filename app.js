@@ -1,19 +1,15 @@
 import bodyParser from "body-parser";
-import 'dotenv/config'
 import express from "express";
 import multer from "multer";
 import fs from "fs";
 import parsePDF from "./src/parser.js";
+// import dateFinder from "./src/GPT.js";
 
 const app = express();
 const port = 3000;
-const upload = multer({ dest: 'uploads/' });
-
-console.log(process.env.joe);
-
-// Remember to set up multer here
 
 // Middleware
+const upload = multer({ dest: 'uploads/' });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 

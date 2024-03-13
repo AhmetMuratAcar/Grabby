@@ -1,4 +1,5 @@
-import pdfParse from "pdf-parse/lib/pdf-parse.js";
+import pdfParse from "pdf-parse/lib/pdf-parse.js";  
+// Imported this way because pdfParse is unmaintained and is raising an error otherwise.
 
 const parsePDF = async (pdfBuffer) => {
 	try {
