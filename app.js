@@ -11,6 +11,7 @@ const port = 3000;
 // Middleware
 const upload = multer({ dest: 'uploads/' });
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("src"));
 app.use(express.static("public"));
 
 // EJS setup
