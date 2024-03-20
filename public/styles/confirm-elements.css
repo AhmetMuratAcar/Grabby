@@ -20,7 +20,9 @@
 .important-date-card {
     max-width: 600px; /* Adjust based on your design preference */
     margin: 0 auto 20px; /* Centers the card and adds bottom margin */
-    padding: 20px; /* Adds padding inside the cards */
+    padding: 2px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds subtle shadow */
     border-radius: 10px; /* Optional: rounds the corners */
+    /* background-color: #0074d9; */
+    background-color: #212529;
 }
