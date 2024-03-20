@@ -1,6 +1,4 @@
 // Small script for disabling/enabling the submit button if file present/not.
-console.log("button disable loaded");
-
 document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('pdfFile');
     const submitBtn = document.getElementById('submitBtn');

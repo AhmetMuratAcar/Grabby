@@ -7,6 +7,7 @@
 	<title>Grabby</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 	<link rel="stylesheet" href="/styles/main.css">
+	<link rel="stylesheet" href="/styles/confirm-elements.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
@@ -16,11 +17,41 @@
 	<%- include("partials/header") %>
 
 	<section id="confirm-section" class="flex-grow-1">
-		<h1> UPLOADED SUCCESSFULLY </h1>
-		<p> <%= text %> </p>
+		<!-- <h1> UPLOADED SUCCESSFULLY </h1> -->
+
+		<div class="container mt-5">
+			<% important_dates.forEach(function(date) { %>
+				<div id="<%= date.title.replace(/\s+/g, '-') %>" class="card mb-3 important-date-card">
+					<div class="card-body">
+						<div class="d-flex justify-content-start align-items-center mb-2">
+							<p class="mb-0 me-2 event-label">Event:</p>
+							<h5 class="card-title mb-0" contenteditable="false"><%= date.title %></h5>
+						</div>
+						<div class="d-flex justify-content-start align-items-center mb-2">
+							<p class="mb-0 me-2 date-label">Date:</p>
+							<p class="card-text date mb-0" contenteditable="false"><%= date.date %></p>
+						</div>
+						<% if (date.time) { %>
+							<div class="d-flex justify-content-start align-items-center mb-3">
+								<p class="mb-0 me-2 time-label">Time:</p>
+								<p class="card-text time mb-0" contenteditable="false"><%= date.time %></p>
+							</div>
+						<% } %>
+						<button class="btn btn-primary edit-btn mt-2">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                            </svg>
+						</button>
+					</div>
+				</div>
+			<% }); %>
+		</div>			
+
 	</section>	
 
 	<%- include("partials/footer") %>
+
+	<script src="/date-edit.js"></script>
 </body>
 
 </html>

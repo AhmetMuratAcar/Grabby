@@ -19,7 +19,9 @@ app.set("view engine", "ejs");
 
 // Routes
 app.get("/", (req, res) => {
-	res.render("index");
+	const jsonData = JSON.parse(fs.readFileSync('test-dates.JSON', 'utf8'));
+	res.render('confirm', { important_dates: jsonData.important_dates });
+	// res.render("index");
 });
 
 app.post('/upload-pdf', upload.single('pdfFile'), async (req, res) => {

@@ -1,0 +1,26 @@
+.event-label, .date-label, .time-label {
+    font-weight: bold;
+}
+
+.card-body {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.card-title, .card-text {
+    margin-left: 4px;
+}
+
+.editable-border {
+    border: 2px solid #007bff;
+    border-radius: 5px;
+}
+
+.important-date-card {
+    max-width: 600px; /* Adjust based on your design preference */
+    margin: 0 auto 20px; /* Centers the card and adds bottom margin */
+    padding: 20px; /* Adds padding inside the cards */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds subtle shadow */
+    border-radius: 10px; /* Optional: rounds the corners */
+}
