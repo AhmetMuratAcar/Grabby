@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isAnyEditable) {
             const userConfirmed = confirm('You are still editing some dates. Are you sure you want to submit?');
             if (userConfirmed) {
-                handleSubmit(); // Handle form submission here
+                handleSubmit();
             }
         } else {
             handleSubmit();
@@ -23,11 +23,19 @@ document.addEventListener('DOMContentLoaded', function() {
 function handleSubmit() {
     const importantDatesContainers = document.querySelectorAll('.important-date-card');
     const importantDates = Array.from(importantDatesContainers).map(container => {
-        return {
+        // Always include title and date
+        const eventObject = {
             title: container.querySelector('.card-title').textContent.trim(),
             date: container.querySelector('.date').textContent.trim(),
-            time: container.querySelector('.time') ? container.querySelector('.time').textContent.trim() : undefined
         };
+
+        // Conditionally add time if present
+        const timeElement = container.querySelector('.time');
+        if (timeElement) {
+            eventObject.time = timeElement.textContent.trim();
+        }
+
+        return eventObject;
     });
 
     const data = {
