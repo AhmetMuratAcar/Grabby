@@ -44,5 +44,8 @@ function handleSubmit() {
 
     console.log(JSON.stringify(data)); // For debugging
 
-    // Add Google Calendar API logic here
+    // TODO:
+    // Write auth function in google-auth.js file and call here
+    // Successful auth -> Google calendar API call with JSON data from GPT API.
+    // On success -> render success.EJS and redirect user to their google calendar in new tab.
 }
