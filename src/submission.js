@@ -1,4 +1,5 @@
-import { googleAuth } from "./google-auth";
+import { googleAuth } from './src/google-auth.js';
+import dateFinder from './src/GPT.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('important-dates-form');
@@ -9,8 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const isAnyEditable = Array.from(document.querySelectorAll('.card-title, .card-text'))
                                    .some(element => element.getAttribute('contenteditable') === 'true');
         
-        // console.log(isAnyEditable);
-
         if (isAnyEditable) {
             const userConfirmed = confirm('You are still editing some dates. Are you sure you want to submit?');
             if (userConfirmed) {
@@ -48,8 +47,31 @@ async function handleSubmit() {
     window.location.href = '/google-auth';
 }
 
+export async function finalizeSubmission() {
+    const importantDatesContainers = document.querySelectorAll('.important-date-card');
+    const importantDates = Array.from(importantDatesContainers).map(container => {
+        const eventObject = {
+            title: container.querySelector('.card-title').textContent.trim(),
+            date: container.querySelector('.date').textContent.trim(),
+        };
 
-    // TODO:
-    // Write auth function in google-auth.js file and call here
-    // Successful auth -> Google calendar API call with JSON data from GPT API.
-    // On success -> render success.EJS and redirect user to their google calendar in new tab.
+        const timeElement = container.querySelector('.time');
+        if (timeElement) {
+            eventObject.time = timeElement.textContent.trim();
+        }
+
+        return eventObject;
+    });
+
+    const data = {
+        important_dates: importantDates
+    };
+
+    console.log(JSON.stringify(data)); // For debugging
+
+    // Extract dates using dateFinder
+    const extractedDates = await dateFinder(JSON.stringify(data));
+
+    // Further processing with extractedDates (e.g., sending to server to update Google Calendar)
+    console.log('Extracted Dates:', extractedDates);
+}

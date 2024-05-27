@@ -1,19 +1,19 @@
 import bodyParser from "body-parser";
 import express from "express";
+import session from 'express-session';
 import multer from "multer";
 import fs from "fs";
 import parsePDF from "./src/parser.js";
-import { googleAuth, handleOAuthCallback } from './src/google-auth.js';
-
-// import dateFinder from "./src/GPT.js";
+import { googleAuth, handleOAuthCallback, addEventsToCalendar } from './src/google-auth.js';
+import dateFinder from "./src/GPT.js";
 
 const app = express();
 const port = 3000;
 
 app.use(session({
-    secret: pprocess.env['SESSION_SECRET'],
-    resave: false,
-    saveUninitialized: true
+	secret: process.env['SESSION_SECRET'],
+	resave: false,
+	saveUninitialized: true
 }));
 
 // Middleware
@@ -42,8 +42,8 @@ app.post('/upload-pdf', upload.single('pdfFile'), async (req, res) => {
 
 	try {
 		const text = await parsePDF(pdfBuffer);
-		// Currrently just rending all parsed text into the confirm page.
-		res.render('confirm', { text: text });
+		req.session.pdfText = text; // Store the parsed PDF text in session
+		res.redirect('/google-auth'); // Redirect to start the OAuth flow
 	} catch (error) {
 		console.error('Error parsing PDF:', error);
 		res.status(500).send('Error parsing PDF');
@@ -57,6 +57,31 @@ app.get('/google-auth', googleAuth);
 
 // OAuth callback route
 app.get('/auth/google/callback', handleOAuthCallback);
+
+app.get('/finalize-submission', async (req, res) => {
+    const pdfText = req.session.pdfText; // Retrieve the stored PDF text
+
+    if (!pdfText) {
+        return res.status(400).send('No PDF text found in session.');
+    }
+
+    const tokens = req.session.tokens;
+
+    if (!tokens) {
+        return res.status(400).send('No OAuth tokens found in session.');
+    }
+
+    try {
+        const importantDates = await dateFinder(pdfText);
+
+        await addEventsToCalendar(importantDates, tokens);
+
+        res.render('success', { important_dates: importantDates });
+    } catch (error) {
+        console.error('Error extracting or adding dates:', error);
+        res.status(500).send('Error extracting or adding dates');
+    }
+});
 
 // Starting server
 app.listen(port, () => {
