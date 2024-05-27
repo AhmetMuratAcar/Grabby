@@ -9,6 +9,9 @@ Grabby was a website for students to add important dates from syllabuses to thei
 
 Shoutout to [Manuel Pinto](https://codepen.io/P1N2O/pen/pyBNzX) for the header and footer gradient animation.
 
+## Tech Stack
+Grabby is an [Express](https://expressjs.com/) application written in JavaScript that utilizes [Node](https://nodejs.org/). [EJS](https://ejs.co/) is used for some quick and easy templating and [Bootstrap](https://getbootstrap.com/) is used for styling.
+
 ## Hosting Locally
 Technically you can clone this repo and host it locally but it will be an unreasonable amount of work. 
 
