@@ -3,10 +3,18 @@ import express from "express";
 import multer from "multer";
 import fs from "fs";
 import parsePDF from "./src/parser.js";
+import { googleAuth, handleOAuthCallback } from './src/google-auth.js';
+
 // import dateFinder from "./src/GPT.js";
 
 const app = express();
 const port = 3000;
+
+app.use(session({
+    secret: pprocess.env['SESSION_SECRET'],
+    resave: false,
+    saveUninitialized: true
+}));
 
 // Middleware
 const upload = multer({ dest: 'uploads/' });
@@ -43,6 +51,12 @@ app.post('/upload-pdf', upload.single('pdfFile'), async (req, res) => {
 		fs.unlinkSync(pdfFilePath); // File cleanup
 	}
 });
+
+// Route to initiate Google OAuth
+app.get('/google-auth', googleAuth);
+
+// OAuth callback route
+app.get('/auth/google/callback', handleOAuthCallback);
 
 // Starting server
 app.listen(port, () => {

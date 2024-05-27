@@ -1,3 +1,5 @@
+import { googleAuth } from "./google-auth";
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('important-dates-form');
 
@@ -20,16 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function handleSubmit() {
+async function handleSubmit() {
     const importantDatesContainers = document.querySelectorAll('.important-date-card');
     const importantDates = Array.from(importantDatesContainers).map(container => {
-        // Always include title and date
         const eventObject = {
             title: container.querySelector('.card-title').textContent.trim(),
             date: container.querySelector('.date').textContent.trim(),
         };
 
-        // Conditionally add time if present
         const timeElement = container.querySelector('.time');
         if (timeElement) {
             eventObject.time = timeElement.textContent.trim();
@@ -44,8 +44,12 @@ function handleSubmit() {
 
     console.log(JSON.stringify(data)); // For debugging
 
+    // Redirect to /google-auth to start OAuth flow
+    window.location.href = '/google-auth';
+}
+
+
     // TODO:
     // Write auth function in google-auth.js file and call here
     // Successful auth -> Google calendar API call with JSON data from GPT API.
     // On success -> render success.EJS and redirect user to their google calendar in new tab.
-}
